@@ -1,10 +1,14 @@
 const express = require('express');
+const _ = require('underscore');
 const userController = require('../controllers/user');
 const app = express();
+
 
 app.post('/api/login', (req, res) => {
     try {
         let body = req.body;
+        if (_.isEmpty(body))
+            return res.status(400).json({ ok: false, err: "Malformed POST request" });
         let response = userController.login(body);
         response.then(data => {
             if (!data.ok)
