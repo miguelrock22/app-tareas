@@ -2,8 +2,8 @@ let Task = require('../models/task');
 
 let get = (opts, handle) => {
     Task.find(opts.filter)
-        /*.skip(opts.from)
-        .limit(opts.limit)*/
+        .skip(opts.from)
+        .limit(opts.limit)
         .exec(handle);
     return;
 };

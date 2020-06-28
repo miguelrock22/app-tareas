@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,7 +18,9 @@ export class TaskComponent implements OnInit {
   tasks:[TaksEntity];
   displayedColumns: string[] = ['name', 'priority', 'end_date', '_id'];
   resultsLength:number;
-  paginator: MatPaginator;
+  isLoadingResults = true;
+  isRateLimitReached = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   name: string;
   priority: number;
@@ -58,11 +60,20 @@ export class TaskComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.getTable();
+    this.getTable(0,5);
   }
 
-  private async getTable(){
-    await this.taksService.getTasks().subscribe(data => {
+  ngAfterViewInit() {
+    this.paginator.page.subscribe((gen,err) => {
+      console.log(gen);
+      this.getTable(gen.pageIndex * gen.pageSize,gen.pageSize);
+    })
+  }
+
+  private async getTable(index?: number,size?: number){
+    if(!size)
+      size = this.paginator.pageSize;
+    await this.taksService.getTasks(index,size).subscribe(data => {
       this.tasks = data.tasksDb;
       this.resultsLength = data.count;
     });
@@ -72,7 +83,7 @@ export class TaskComponent implements OnInit {
     await this.taksService.updateTask(task).subscribe(data => {
       let message = "Se ha editado la tarea correctamente.";
       if(data)
-        this.getTable();
+        this.getTable(0);
       else
         message = "Error editando la tarea";
       this.openSnackBar(message);
@@ -89,7 +100,7 @@ export class TaskComponent implements OnInit {
     await this.taksService.deleteTask(id).subscribe(data => {
       let message = "Se ha eliminado la tarea correctamente.";
       if(data)
-        this.getTable();
+        this.getTable(0);
       else
         message = "Error eliminando la tarea";
       this.openSnackBar(message);
@@ -107,7 +118,7 @@ export class TaskComponent implements OnInit {
     }).subscribe(data => {
       let message = "Se ha agregado la tarea correctamente.";
       if(data)
-        this.getTable();
+        this.getTable(0);
       else
         message = "Error agregando la tarea";
       this.openSnackBar(message);

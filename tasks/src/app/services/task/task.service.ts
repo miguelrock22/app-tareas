@@ -15,8 +15,8 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  getTasks() {
-    return this.http.get<Task>(this.taskUrl,{
+  getTasks(index:number,size:number) {
+    return this.http.get<Task>(`${this.taskUrl}?from=${index}&limit=${size}`,{
       responseType:'json',
       headers:{
         'Content-Type': 'application/json',
