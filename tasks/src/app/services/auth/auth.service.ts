@@ -12,6 +12,7 @@ import { User } from '../../classes/user';
 export class AuthService {
 
   private loginUrl = environment.apiUrl+'/login';
+  private registerUrl = environment.apiUrl+'/user';
   public user: object;
   private token = null;
 
@@ -37,6 +38,13 @@ export class AuthService {
   setToken(token:string){
     this.token = token;
     sessionStorage.setItem('token',this.token);
+  }
+  
+  register(name:string, email: string, password: string){
+    return this.http.post<any>(this.registerUrl,{name,email,password},{responseType:'json'})
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
   // Implement a method to handle errors if any

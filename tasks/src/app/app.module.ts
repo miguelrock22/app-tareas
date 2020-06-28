@@ -20,19 +20,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { LoginComponent } from './pages/login/login.component';
 import { TaskComponent } from './pages/task/task.component';
 
 import { AuthService } from './services/auth/auth.service';
 import { TaskDialogComponent } from './pages/task/task-dialog/task-dialog.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     TaskComponent,
-    TaskDialogComponent
+    TaskDialogComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { TaskDialogComponent } from './pages/task/task-dialog/task-dialog.compon
     MatSlideToggleModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatDialogModule ,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

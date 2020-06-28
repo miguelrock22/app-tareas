@@ -13,12 +13,52 @@ let count = (opts, handle) => {
 };
 
 let insert = (task, handle) => {
-    let t = new Task(task);
-    t.save(handle);
+    try {
+        let t = new Task(task);
+        t.save(handle);
+        return;
+    } catch (err) {
+        return err;
+    }
 };
+
+let update = (task, handle) => {
+    try {
+        Task.findById(task._id, (err, taskDb) => {
+            if (!err) {
+                taskDb.name = task.name;
+                taskDb.priority = task.priority;
+                taskDb.end_date = task.end_date;
+                taskDb.save(handle);
+                return
+            }
+            return err;
+        });
+    } catch (err) {
+        return err;
+    }
+}
+
+let remove = (task, handle) => {
+    try {
+        Task.findById(task._id, (err, taskDb) => {
+            if (!err) {
+                if (taskDb.user == task.user)
+                    taskDb.remove(handle);
+                return
+            }
+            return err;
+        });
+    } catch (err) {
+        return err;
+    }
+}
+
 
 module.exports = {
     get,
     insert,
-    count
+    count,
+    update,
+    remove
 }

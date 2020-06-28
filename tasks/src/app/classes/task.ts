@@ -1,4 +1,5 @@
 export type TaksEntity = {
+    _id: string;
     name:string;
     priority:number;
     end_date: Date;

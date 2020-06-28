@@ -28,6 +28,45 @@ export class TaskService {
     );
   }
 
+  addTask(task){
+    return this.http.post(this.taskUrl,task,{
+      responseType:'json',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('token')
+      }
+    })
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateTask(task){
+    return this.http.put(this.taskUrl,task,{
+      responseType:'json',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('token')
+      }
+    })
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  deleteTask(id: string){
+    return this.http.delete(`${this.taskUrl}/${id}`,{
+      responseType:'json',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('token')
+      }
+    })
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   // Implement a method to handle errors if any
   private handleError(err: HttpErrorResponse | any) {
     return throwError(err.message || err);

@@ -23,6 +23,7 @@ app.post('/api/login', (req, res) => {
     }
 });
 
+//Registrar usuario
 app.post('/api/user', (req, res) => {
     try {
         let body = req.body;

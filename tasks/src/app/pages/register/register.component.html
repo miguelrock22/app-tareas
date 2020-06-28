@@ -1,10 +1,13 @@
 <mat-card>
     <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <h2>Iniciar Sesión</h2>
-            <mat-error *ngIf="loginInvalid">
-                Error en el correo o contraseña
-            </mat-error>
+            <h2>Registrate</h2>
+            <mat-form-field class="full-width-input">
+                <input matInput placeholder="Nombre" formControlName="name" required>
+                <mat-error>
+                    Entra un nombre
+                </mat-error>
+            </mat-form-field>
             <mat-form-field class="full-width-input">
                 <input matInput placeholder="Email" formControlName="email" required>
                 <mat-error>
@@ -17,8 +20,8 @@
                     Entra una contraseña
                 </mat-error>
             </mat-form-field>
-            <a routerLink="/register" mat-raised-button color="secondary" routerLinkActive="active">Registrate</a>
-            <button mat-raised-button color="primary">Iniciar</button>
+            <a routerLink="/" mat-raised-button color="secondary" routerLinkActive="active">Volver a iniciar sesión</a>
+            <button mat-raised-button color="primary">Registrarse</button>
         </form>
         <br>
     </mat-card-content>
