@@ -3,14 +3,15 @@ const taskController = require('../controllers/task');
 const app = express();
 
 const { verifyToken } = require('../middlewares/auth');
+const user = require('../models/user');
 
 app.get('/api/task', verifyToken, (req, res) => {
-    let opts = {
-        from: Number(req.query.from) || 0,
-        limit: Number(req.query.limit) || 5,
-        filter: { user: req.user._id }
-    }
     try {
+        let opts = {
+            from: Number(req.query.from) || 0,
+            limit: Number(req.query.limit) || 5,
+            filter: { user: req.user._id }
+        }
         taskController.get(opts, (err, tasksDb) => {
             if (err)
                 return res.status(400).json({ ok: false, err });

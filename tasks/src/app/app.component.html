@@ -1,0 +1,11 @@
+<p>
+    <mat-toolbar color="primary">
+        <span>{{title}}</span>
+        <span class="spacer"></span>
+        <button mat-icon-button *ngIf="authService.isLoggedIn()" (click)=" onCloseClick() ">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</p>
+
+<router-outlet></router-outlet>

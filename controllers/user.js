@@ -15,12 +15,16 @@ let login = async(user, handle) => {
             return { ok: false, err };
 
         if (!userDb)
-            return { ok: false, err: 'Usuario o contraseña incorrectos' };
+            return false;
+        console.log(userDb);
 
         if (!bcrypt.compareSync(user.password, userDb.password))
-            return { ok: false, err: 'Usuario o contraseña incorrectos' };
+            return false;
+
         return userDb;
-    }).then(result => {
+    }).then((result) => {
+        if (!result)
+            return res = { ok: false, err: 'Usuario o contraseña incorrectos' };
         let token = jwt.sign({
             user: result,
         }, process.env.TOKEN_SEED, { expiresIn: process.env.TOKEN_EXPIRE });
