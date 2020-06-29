@@ -2,18 +2,20 @@
 <mat-dialog-content class="mat-typography">
     <mat-form-field>
         <mat-label>Nombre</mat-label>
-        <input matInput [(ngModel)]="data.name">
+        <input matInput [(ngModel)]="data.name" name="name">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Prioridad</mat-label>
-        <input matInput [(ngModel)]="data.priority">
+        <input matInput [(ngModel)]="data.priority" name="priority">
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Fecha de finalización</mat-label>
-        <input matInput [(ngModel)]="data.end_date">
+        <mat-label>Fecha fin</mat-label>
+        <input matInput [(ngModel)]="data.end_date" [matDatepicker]="picker" name="end_date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close (click)='onNoClick()'>Cancelar</button>
+    <button mat-button mat-dialog-close="false" (click)='onNoClick()'>Cancelar</button>
     <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
 </mat-dialog-actions>

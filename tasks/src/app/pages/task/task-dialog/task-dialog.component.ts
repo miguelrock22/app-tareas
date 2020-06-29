@@ -1,11 +1,12 @@
-import { Component,Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component,Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 export interface DialogData {
   action: string;
   name: string;
   priority: number;
-  end_date: Date;
+  end_date: moment.Moment;
 }
 
 @Component({
@@ -14,10 +15,12 @@ export interface DialogData {
   styleUrls: ['./task-dialog.component.scss']
 })
 export class TaskDialogComponent {
+  @ViewChild('picker') picker: any;
+  
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
+    
   onNoClick(): void {
     this.dialogRef.close();
   }

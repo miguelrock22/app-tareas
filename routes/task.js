@@ -28,6 +28,32 @@ app.get('/api/task', verifyToken, (req, res) => {
     }
 });
 
+// Get today tasks
+app.get('/api/task/today', verifyToken, (req, res) => {
+    try {
+        var start = new Date();
+        start.setHours(0, 0, 0, 0);
+
+        var end = new Date();
+        end.setHours(23, 59, 59, 999);
+        let opts = {
+            filter: { end_date: { $gte: start, $lt: end } }
+        }
+        taskController.get(opts, (err, tasksDb) => {
+            if (err)
+                return res.status(400).json({ ok: false, err });
+            taskController.count(opts, (err, count) => {
+                if (err)
+                    return res.status(400).json({ ok: false, err });
+                res.json({ ok: true, tasksDb, count });
+
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ ok: false, error });
+    }
+});
+
 /*app.get('/task/:id', (req, res) => {
     let id = req.params.id;
     res.json("Something");

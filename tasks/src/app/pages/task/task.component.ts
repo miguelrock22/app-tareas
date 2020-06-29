@@ -4,6 +4,7 @@ import { MatDialog} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TaskDialogComponent }  from './task-dialog/task-dialog.component';
+import { TodayTasksComponent } from './today-tasks/today-tasks.component';
 
 import { TaskService } from '../../services/task/task.service';
 import { TaksEntity } from '../../classes/task';
@@ -16,6 +17,7 @@ import { TaksEntity } from '../../classes/task';
 export class TaskComponent implements OnInit {
 
   tasks:[TaksEntity];
+  todayTasks:[TaksEntity];
   displayedColumns: string[] = ['name', 'priority', 'end_date', '_id'];
   resultsLength:number;
   isLoadingResults = true;
@@ -50,24 +52,36 @@ export class TaskComponent implements OnInit {
       );
   
       dialogRef.afterClosed().subscribe(data => {
-        if(action == "Agregar")
-          this.add(data);
-        else{
-          data._id = task._id;
-          this.edit(data);
+        if(typeof data !== "undefined"){
+          console.log(data);
+          if(data.name === "" || data.priority === null || data.date_end === null){
+            this.openSnackBar("Debes llenar todos los campos");
+            return;
+          }
+
+          if(action == "Agregar")
+            this.add(data);
+          else{
+            data._id = task._id;
+            this.edit(data);
+          }
         }
       });
     }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getTable(0,5);
+    await this.taksService.getTodayTasks().subscribe(data => {
+      console.log(data);
+      this.todayTasks = data.tasksDb;
+      const dialogRef = this.dialog.open(TodayTasksComponent,{data:this.todayTasks});
+    });
   }
 
   ngAfterViewInit() {
     this.paginator.page.subscribe((gen,err) => {
-      console.log(gen);
       this.getTable(gen.pageIndex * gen.pageSize,gen.pageSize);
-    })
+    });
   }
 
   private async getTable(index?: number,size?: number){

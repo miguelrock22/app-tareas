@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Tareas para hoy</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-list role="list">
+        <div *ngIf="data">
+            <mat-list-item role="listitem" *ngFor="let task of data">
+                {{task.name}}, Prioridad: {{task.priority}}, {{task.end_date | date}}
+            </mat-list-item>
+        </div>
+    </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close="false" (click)='onNoClick()'>Cerrar</button>
+</mat-dialog-actions>

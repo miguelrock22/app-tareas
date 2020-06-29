@@ -21,6 +21,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { MatListModule } from '@angular/material/list';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
 
 import { LoginComponent } from './pages/login/login.component';
 import { TaskComponent } from './pages/task/task.component';
@@ -28,6 +33,7 @@ import { TaskComponent } from './pages/task/task.component';
 import { AuthService } from './services/auth/auth.service';
 import { TaskDialogComponent } from './pages/task/task-dialog/task-dialog.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { TodayTasksComponent } from './pages/task/today-tasks/today-tasks.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +41,8 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     TaskComponent,
     TaskDialogComponent,
-    RegisterComponent
+    RegisterComponent,
+    TodayTasksComponent
   ],
   imports: [
     BrowserModule,
@@ -52,13 +59,21 @@ import { RegisterComponent } from './pages/register/register.component';
     MatIconModule,
     MatButtonModule,
     MatTableModule,
+    MatListModule,
     MatPaginatorModule,
     MatDividerModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    NgxMatNativeDateModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatMomentModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

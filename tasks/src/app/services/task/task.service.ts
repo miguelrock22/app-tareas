@@ -28,6 +28,19 @@ export class TaskService {
     );
   }
 
+  getTodayTasks() {
+    return this.http.get<Task>(`${this.taskUrl}/today`,{
+      responseType:'json',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('token')
+      }
+    })
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   addTask(task){
     return this.http.post(this.taskUrl,task,{
       responseType:'json',
